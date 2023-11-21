@@ -2,13 +2,24 @@
 #define BlinkerRGB_h
 
 #include <Arduino.h>
+// #include <NeoPixel.h>
+
+struct RGB
+{
+    byte r, g, b;
+    RGB(byte red = 255, byte green = 255, byte blue = 255) : r(red), g(green), b(blue) {}
+};
 
 class BlinkerRGB
 {
 public:
-    BlinkerRGB(int pin = LED_BUILTIN);
+    static const int DEFAULT_PULSES;
+    static const int DEFAULT_PERIOD;
+    BlinkerRGB(int pin = RGB_BUILTIN);
     void init();
-    void blink(int pulses = 1, int period = 50);
+    void blink(RGB color);
+    void blink(int pulses, RGB color);
+    void blink(int pulses = DEFAULT_PULSES, int period = DEFAULT_PERIOD, RGB color = RGB());
     void handle();
 
 private:
@@ -18,6 +29,7 @@ private:
     bool _isOn;
     unsigned long _previousMillis;
     int _blinkCount;
+    byte _red, _green, _blue;
 };
 
 #endif

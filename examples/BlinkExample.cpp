@@ -1,8 +1,8 @@
-#include <Arduino.h> // Include the main Arduino library
-#include <Blinker.h> // Include the Blinker library for LED control
+#include <Arduino.h>    // Include Arduino main library
+#include <BlinkerRGB.h> // Include custom BlinkerRGB library for LED control
 
-Blinker blinker; // Create a Blinker instance for the built-in LED
-// Blinker blinker(2); // Create a Blinker instance for the LED on pin 2
+// BlinkerRGB blinker; // Create a BlinkerRGB object for an LED connected to default pin
+BlinkerRGB blinker(38); // Create a BlinkerRGB object for an LED connected to pin 38
 
 void setup()
 {
@@ -11,14 +11,15 @@ void setup()
 
 void loop()
 {
-  blinker.handle(); // Manage the blinking process during each loop iteration
+  blinker.handle(); // Continuously update the LED state
 
-  static unsigned long previousMillis = millis(); // Store the last time the LED blinked
+  // Logic to blink the LED every second
+  static unsigned long previousMillis = millis(); // Remember the last time the LED was updated
 
-  // Check if 1 second (1000 milliseconds) has elapsed
+  // Check if 1 second has passed
   if (millis() - previousMillis >= 1000)
   {
-    blinker.blink();           // Blink the LED once every second
-    previousMillis = millis(); // Update the time since the last blink
+    blinker.blink(RGB{0, 255, 0}); // Blink the LED in green color
+    previousMillis = millis();     // Reset the timer
   }
 }
